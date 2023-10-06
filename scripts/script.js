@@ -48,26 +48,28 @@ function main() {
 	//весть куб
 	const cube = new THREE.Object3D()
 	scene.add(cube)
-
-
-	const geometry = new THREE.BoxGeometry(30, 30, 30)
-	const material = new THREE.MeshPhongMaterial({ color: 0xFF0000, wireframe: true })
-	const mesh = new THREE.Mesh(geometry, material)
-	cube.add(mesh)
 	//детали
+	const size = 10
 	const inner = '#616161'
-	function genDetail(x, y, z, colors) {
-		const size = 10
+	function genDetail(colors) {
 		const geometry = new THREE.BoxGeometry(size, size, size)
 		const materials = [
 			new THREE.MeshPhongMaterial({ color: colors.right || inner }),
 			new THREE.MeshPhongMaterial({ color: colors.left || inner }),
 			new THREE.MeshPhongMaterial({ color: colors.up || inner }),
-			new THREE.MeshPhongMaterial({ color: colors.doun || inner }),
+			new THREE.MeshPhongMaterial({ color: colors.down || inner }),
 			new THREE.MeshPhongMaterial({ color: colors.front || inner }),
 			new THREE.MeshPhongMaterial({ color: colors.back || inner })
 		]
 		const mesh = new THREE.Mesh(geometry, materials)
+
+		let x = 0, y = 0, z = 0
+		if (colors.right) x = size
+		if (colors.left) x = -size
+		if (colors.up) y = size
+		if (colors.down) y = -size
+		if (colors.front) z = size
+		if (colors.back) z = -size
 		mesh.position.set(x, y, z)
 		cube.add(mesh)
 	}
@@ -77,16 +79,32 @@ function main() {
 	const orange = '#ff6d00'
 	const yellow = '#ffd600'
 	const blue = '#2962ff'
-	genDetail(10, 10, 10, { right: red, up: white, front: green }) //RUF
-	genDetail(-10, 10, 10, { left: orange, up: white, front: green }) //LUF
-	genDetail(10, -10, 10, { right: red, doun: yellow, front: green }) //RDF
-	genDetail(-10, -10, 10, { left: orange, doun: yellow, front: green }) //LDF
-	genDetail(10, 10, -10, { right: red, up: white, back: blue }) //RUB
-	genDetail(-10, 10, -10, { left: orange, up: white, back: blue }) //LUB
-	genDetail(10, -10, -10, { right: red, doun: yellow, back: blue }) //RDB
-	genDetail(-10, -10, -10, { left: orange, doun: yellow, back: blue }) //LDB
-
-	genDetail(0, -10, -10, { left: orange, doun: yellow, back: blue }) //UF
+	genDetail({ right: red, up: white, front: green }) //RUF
+	genDetail({ left: orange, up: white, front: green }) //LUF
+	genDetail({ right: red, down: yellow, front: green }) //RDF
+	genDetail({ left: orange, down: yellow, front: green }) //LDF
+	genDetail({ right: red, up: white, back: blue }) //RUB
+	genDetail({ left: orange, up: white, back: blue }) //LUB
+	genDetail({ right: red, down: yellow, back: blue }) //RDB
+	genDetail({ left: orange, down: yellow, back: blue }) //LDB
+	genDetail({ up: white, front: green }) //UF
+	genDetail({ up: white, back: blue }) //UB
+	genDetail({ up: white, right: red }) //UR
+	genDetail({ up: white, left: orange }) //UL
+	genDetail({ down: yellow, front: green }) //DF
+	genDetail({ down: yellow, back: blue }) //DB
+	genDetail({ down: yellow, right: red }) //DR
+	genDetail({ down: yellow, left: orange }) //DL
+	genDetail({ right: red, front: green }) //RF
+	genDetail({ left: orange, front: green }) //LF
+	genDetail({ right: red, back: blue }) //RB
+	genDetail({ left: orange, back: blue }) //LB
+	genDetail({ up: white }) //U
+	genDetail({ down: yellow }) //D
+	genDetail({ right: red }) //R
+	genDetail({ left: orange }) //L
+	genDetail({ front: green }) //F
+	genDetail({ back: blue }) //B
 	//адаптивность
 	function resizeRendererToDisplaySize(renderer) {
 		const canvas = renderer.domElement
