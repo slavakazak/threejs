@@ -1,7 +1,7 @@
-#Threejs
+# Threejs
 Каждый файл из папки scripts подключать отдельно, путём замены пути в index.html
 
-##cube.js
+## cube.js
 Вращение граней по часовой стрелке:
 W - Up
 A - Left
@@ -13,5 +13,5 @@ X - Down
 Shift + (W, A, S, D, F, X)
 Вращение всего куба мышью
 
-##maze.js
+## maze.js
 Управление мышью
